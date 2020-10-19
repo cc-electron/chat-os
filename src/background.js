@@ -1,5 +1,6 @@
 'use strict'
 // https://nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration
+// https://nklayman.github.io/vue-cli-plugin-electron-builder/guide/recipes.html#multiple-pages
 import {
   app,
   protocol,
@@ -84,8 +85,13 @@ app.on('activate', () => {
   app.isQuiting = false
   !win.isVisible() && win.show();
   if (win === null) {
-    createWindow()
+    win = createWindow('', 'index.html')
   }
+  !secondWin.isVisible() && secondWin.show();
+  if (secondWin === null) {
+    secondWin = createWindow('subpage', 'subpage.html')
+  }
+  
 })
 
 // This method will be called when Electron has finished
