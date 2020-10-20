@@ -14,6 +14,7 @@ import {
 import installExtension, {
   VUEJS_DEVTOOLS
 } from 'electron-devtools-installer'
+import { autoUpdater } from "electron-updater"
 const isDev = process.env.NODE_ENV !== 'production'
 const path = require('path')
 const menuTemplate = require('./electron/menu')
@@ -113,6 +114,7 @@ app.on('ready', async () => {
   }
   win = createWindow('', 'index.html')
   secondWin = createWindow('subpage', 'subpage.html')
+  autoUpdater.checkForUpdatesAndNotify()
 
   //托盘
   winTray = trays(win)
