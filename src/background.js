@@ -118,10 +118,44 @@ app.on('ready', async () => {
   //托盘
   trays(secondWin)
 
+  win.on('close', (event) => {
+      // 回收BrowserWindow对象
+      // 窗口缩小到最小才能关闭程序
+      if(win.isMinimized()||app.isQuiting){
+        win = null;
+      }else{
+        event.preventDefault();
+        // win.minimize();
+        app.isQuiting = false
+        
+        win.hide();
+        win.setSkipTaskbar(true);
+      }
+
+  });
+  secondWin.on('close', (event) => {
+      // 回收BrowserWindow对象
+      // 窗口缩小到最小才能关闭程序
+      if(secondWin.isMinimized()||app.isQuiting2){
+        secondWin = null;
+      }else{
+        event.preventDefault();
+        // secondWin.minimize();
+        app.isQuiting2 = false
+        
+        secondWin.hide();
+        secondWin.setSkipTaskbar(true);
+      }
+
+  });
+
+  
+
 })
 app.on('before-quit',()=>{
   console.log('2333强制退出前！！！')
   app.isQuiting = true
+  app.isQuiting2 = true
 })
 app.on('quit',()=>{
   console.log('2333强制退出了2333！！！')

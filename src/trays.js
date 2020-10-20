@@ -24,6 +24,7 @@ export const trays = (win) => {
         {
             label: '退出',
             click:function(){
+                app.isQuiting2 = true
                 app.isQuiting = true
                 app.quit()
             }
