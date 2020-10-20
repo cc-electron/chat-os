@@ -26,7 +26,13 @@ module.exports = {
         electronBuilder: {
             "nodeIntegration": true,
             builderOptions: {
-                publish: ['github'],
+                publish: [
+                    {
+                        "provider": "github",
+                        "owner": "yyccQQu",
+                        "repo": "chat-os"
+                    }
+                ],
                 "appId": "com.example.app", //ID 不用解释吧?
                 "asar": false,
                 "productName": "chaoxin", //项目名，也是生成的安装文件名，即aDemo.exe
