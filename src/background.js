@@ -22,7 +22,7 @@ import {newWindow} from './electron/AppWindow'
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let win,secondWin
+let win,secondWin,winTray,secondwinTray
 app.isQuiting = false
 
 // Scheme must be registered before the app is ready
@@ -83,6 +83,7 @@ app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   app.isQuiting = false
+  app.isQuiting2 = false
   !win.isVisible() && win.show();
   if (win === null) {
     win = createWindow('', 'index.html')
@@ -114,9 +115,9 @@ app.on('ready', async () => {
   secondWin = createWindow('subpage', 'subpage.html')
 
   //托盘
-  trays(win)
+  winTray = trays(win)
   //托盘
-  trays(secondWin)
+  secondwinTray = trays(secondWin)
 
   win.on('close', (event) => {
       // 回收BrowserWindow对象
@@ -147,6 +148,40 @@ app.on('ready', async () => {
         secondWin.setSkipTaskbar(true);
       }
 
+  });
+
+  win.on('blur', () => {
+    // 弹跳功能 information 只跳一次 critical 直到窗口激活才会停止
+    // app.dock.bounce("critical");
+    // 更改底部扩展栏图标
+    // app.dock.setIcon(path.join(__static, '/appicon.png'));
+    
+    // 冒泡信息提示
+    const badgeString = app.dock.getBadge();
+    console.log(badgeString,'badgeString')
+
+    if (badgeString === '') {
+      app.dock.setBadge('1');
+      console.log(badgeString,'2333badgeString')
+    } else {
+      app.dock.setBadge((parseInt(badgeString) + 1).toString());
+    }
+
+    // let countssss = app.badgeCount;
+    // console.log(countssss,'counts')
+    // if (badge.count > 0) {
+    //     app.dock.setBadge('12345654');
+    // } else {
+    //     app.dock.setBadge('99000');
+    // }
+    // if (process.platform === 'darwin') {
+    //     app.dock.setBadge('2');
+    //     app.setBadgeCount(2);
+        
+    // }
+    
+
+    
   });
 
   

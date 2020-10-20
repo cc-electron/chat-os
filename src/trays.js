@@ -65,4 +65,5 @@ export const trays = (win) => {
     tray.on('double-click',function(){
         win.show()
     })
+    return tray
 }
