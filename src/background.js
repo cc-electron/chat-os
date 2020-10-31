@@ -114,8 +114,8 @@ app.on('ready', async () => {
   }
   win = createWindow('', 'index.html')
   secondWin = createWindow('subpage', 'subpage.html')
-  autoUpdater.checkForUpdatesAndNotify()
-
+  
+  
   //托盘
   winTray = trays(win)
   //托盘
@@ -152,6 +152,10 @@ app.on('ready', async () => {
 
   });
 
+  win.once("ready-to-show", () => {
+    autoUpdater.checkForUpdatesAndNotify();
+  });
+  
   win.on('blur', () => {
     // 弹跳功能 information 只跳一次 critical 直到窗口激活才会停止
     // app.dock.bounce("critical");
@@ -186,7 +190,7 @@ app.on('ready', async () => {
     
   });
 
-  
+  win.on("closed", () => { win = null; });
 
 })
 app.on('before-quit',()=>{
